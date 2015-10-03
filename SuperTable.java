@@ -21,42 +21,60 @@ public class SuperTable{
 
    public static void main(String[] args) throws IOException {
 
-      // Instantiate Configuration class
 
-      // Instaniate HBaseAdmin class
-      
-      // Instantiate table descriptor class
+       Configuration	config	=	HBaseConfiguration.create();
+       HBaseAdmin admin = new HBaseAdmin(config);
+       HTableDescriptor	tableDescriptor	=	new HTableDescriptor(TableName.valueOf("powers"));
 
-      // Add column families to table descriptor
+       tableDescriptor.addFamily(new HColumnDescriptor("hero"));
+       tableDescriptor.addFamily(new HColumnDescriptor("power"));
+       tableDescriptor.addFamily(new HColumnDescriptor("name"));
+       tableDescriptor.addFamily(new HColumnDescriptor("xp"));
 
-      // Execute the table through admin
 
-      // Instantiating HTable class
-     
-      // Repeat these steps as many times as necessary
+       HTable table	= new HTable(config, "powers");
 
-	      // Instantiating Put class
-              // Hint: Accepts a row name
+                Put p1 = new Put(Bytes.toBytes("row1"));
+                p1.add(Bytes.toBytes("personal"), Bytes.toBytes("hero"),Bytes.toBytes("superman"));
+                p1.add(Bytes.toBytes("personal"), Bytes.toBytes("power"),Bytes.toBytes("strength"));
+                p1.add(Bytes.toBytes("professional"), Bytes.toBytes("name"),Bytes.toBytes("clark"));
+                p1.add(Bytes.toBytes("professional"), Bytes.toBytes("xp"),Bytes.toBytes("100"));
 
-      	      // Add values using add() method
-              // Hints: Accepts column family name, qualifier/row name ,value
+                Put p2 = new Put(Bytes.toBytes("row2"));
+                p2.add(Bytes.toBytes("personal"), Bytes.toBytes("hero"), Bytes.toBytes("batman"));
+                p2.add(Bytes.toBytes("personal"), Bytes.toBytes("power"), Bytes.toBytes("money"));
+                p2.add(Bytes.toBytes("professional"), Bytes.toBytes("name"), Bytes.toBytes("bruce"));
+                p2.add(Bytes.toBytes("professional"), Bytes.toBytes("xp"), Bytes.toBytes("50"));
 
-      // Save the table
-	
-      // Close table
+                Put p3 = new Put(Bytes.toBytes("row3"));
+                p3.add(Bytes.toBytes("personal"), Bytes.toBytes("hero"), Bytes.toBytes("wolverine"));
+                p3.add(Bytes.toBytes("personal"), Bytes.toBytes("power"), Bytes.toBytes("logan"));
+                p3.add(Bytes.toBytes("professional"), Bytes.toBytes("name"), Bytes.toBytes("healing"));
+                p3.add(Bytes.toBytes("professional"), Bytes.toBytes("xp"), Bytes.toBytes("75"));
 
-      // Instantiate the Scan class
-     
-      // Scan the required columns
+       table.put(p1);
+       table.put(p2);
+       table.put(p3);
 
-      // Get the scan result
+       table.close();
 
-      // Read values from scan result
-      // Print scan result
- 
-      // Close the scanner
-   
-      // Htable closer
+       Scan	scan = new Scan();
+
+
+       scan.addColumn(Bytes.toBytes("personal"), Bytes.toBytes("hero"));
+       scan.addColumn(Bytes.toBytes("personal"), Bytes.toBytes("power"));
+       scan.addColumn(Bytes.toBytes("professional"), Bytes.toBytes("name"));
+       scan.addColumn(Bytes.toBytes("professional"), Bytes.toBytes("xp"));
+
+       ResultScanner	scanner	=	table.getScanner(scan);
+
+       for	(Result	result	=	scanner.next();	result	!=	null;	result	=	scanner.next())
+           System.out.println("Found	row	:	"	+	result);
+
+
+       scanner.close();
+
+       hTable.close();
    }
 }
 
