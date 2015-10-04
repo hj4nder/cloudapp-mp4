@@ -38,7 +38,7 @@ public class SuperTable{
        if(admin.isTableDisabled(POWERS))
            admin.disableTable(POWERS);
 
-       if (tableExists(POWERS))
+       if (admin.tableExists(POWERS))
            admin.deleteTable(POWERS);
 
 
