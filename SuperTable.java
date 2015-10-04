@@ -22,15 +22,16 @@ public class SuperTable{
    public static void main(String[] args) throws IOException {
 
 
-       Configuration	config	=	HBaseConfiguration.create();
+       Configuration config	= HBaseConfiguration.create();
        HBaseAdmin admin = new HBaseAdmin(config);
-       HTableDescriptor	tableDescriptor	=	new HTableDescriptor(TableName.valueOf("powers"));
+       HTableDescriptor	tableDescriptor	= new HTableDescriptor(TableName.valueOf("powers"));
 
        tableDescriptor.addFamily(new HColumnDescriptor("hero"));
        tableDescriptor.addFamily(new HColumnDescriptor("power"));
        tableDescriptor.addFamily(new HColumnDescriptor("name"));
        tableDescriptor.addFamily(new HColumnDescriptor("xp"));
 
+       admin.createTable(tableDescriptor);
 
        HTable table	= new HTable(config, "powers");
 
