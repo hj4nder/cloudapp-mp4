@@ -58,8 +58,8 @@ public class SuperTable{
 
                 Put p3 = new Put(Bytes.toBytes("row3"));
                 p3.add(Bytes.toBytes("personal"), Bytes.toBytes("hero"), Bytes.toBytes("wolverine"));
-                p3.add(Bytes.toBytes("personal"), Bytes.toBytes("power"), Bytes.toBytes("logan"));
-                p3.add(Bytes.toBytes("professional"), Bytes.toBytes("name"), Bytes.toBytes("healing"));
+                p3.add(Bytes.toBytes("personal"), Bytes.toBytes("power"), Bytes.toBytes("healing"));
+                p3.add(Bytes.toBytes("professional"), Bytes.toBytes("name"), Bytes.toBytes("logan"));
                 p3.add(Bytes.toBytes("professional"), Bytes.toBytes("xp"), Bytes.toBytes("75"));
 
        table.put(p1);
