@@ -21,19 +21,23 @@ public class SuperTable{
 
    public static void main(String[] args) throws IOException {
 
+       static final String POWERS = "powers";
 
        Configuration config	= HBaseConfiguration.create();
        HBaseAdmin admin = new HBaseAdmin(config);
-       HTableDescriptor	tableDescriptor	= new HTableDescriptor(TableName.valueOf("powers"));
+       HTableDescriptor	tableDescriptor	= new HTableDescriptor(TableName.valueOf(POWERS));
 
        tableDescriptor.addFamily(new HColumnDescriptor("hero"));
        tableDescriptor.addFamily(new HColumnDescriptor("power"));
        tableDescriptor.addFamily(new HColumnDescriptor("name"));
        tableDescriptor.addFamily(new HColumnDescriptor("xp"));
 
+       if(tableExists(POWERS))
+           admin.deleteTable(POWERS);
+
        admin.createTable(tableDescriptor);
 
-       HTable table	= new HTable(config, "powers");
+       HTable table	= new HTable(config, POWERS);
 
                 Put p1 = new Put(Bytes.toBytes("row1"));
                 p1.add(Bytes.toBytes("personal"), Bytes.toBytes("hero"),Bytes.toBytes("superman"));
@@ -64,14 +68,13 @@ public class SuperTable{
 
        scan.addColumn(Bytes.toBytes("personal"), Bytes.toBytes("hero"));
 
-       ResultScanner	scanner	=	table.getScanner(scan);
+       ResultScanner scanner = table.getScanner(scan);
 
-       for	(Result	result	=	scanner.next();	result	!=	null;	result	=	scanner.next())
-           System.out.println("Found	row	:	"	+	result);
+       for (Result result =	scanner.next();	result != null;	result = scanner.next())
+           System.out.println("Found row : " + result);
 
 
        scanner.close();
-
        table.close();
    }
 }
