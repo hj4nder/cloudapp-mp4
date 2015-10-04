@@ -30,12 +30,10 @@ public class SuperTable{
        HBaseAdmin admin = new HBaseAdmin(config);
        HTableDescriptor	tableDescriptor	= new HTableDescriptor(TableName.valueOf(POWERS));
 
-       tableDescriptor.addFamily(new HColumnDescriptor("hero"));
-       tableDescriptor.addFamily(new HColumnDescriptor("power"));
-       tableDescriptor.addFamily(new HColumnDescriptor("name"));
-       tableDescriptor.addFamily(new HColumnDescriptor("xp"));
+       tableDescriptor.addFamily(new HColumnDescriptor("personal"));
+       tableDescriptor.addFamily(new HColumnDescriptor("professional"));
 
-       if(admin.isTableDisabled(POWERS))
+       if(admin.tableExists(POWERS) && !admin.isTableDisabled(POWERS))
            admin.disableTable(POWERS);
 
        if (admin.tableExists(POWERS))
