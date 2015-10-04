@@ -71,7 +71,7 @@ public class SuperTable{
 
        scanner.close();
 
-       hTable.close();
+       table.close();
    }
 }
 
