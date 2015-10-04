@@ -35,8 +35,12 @@ public class SuperTable{
        tableDescriptor.addFamily(new HColumnDescriptor("name"));
        tableDescriptor.addFamily(new HColumnDescriptor("xp"));
 
-       if(tableExists(POWERS))
+       if(admin.isTableDisabled(POWERS))
+           admin.disableTable(POWERS);
+
+       if (tableExists(POWERS))
            admin.deleteTable(POWERS);
+
 
        admin.createTable(tableDescriptor);
 
