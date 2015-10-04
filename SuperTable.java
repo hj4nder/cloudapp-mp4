@@ -19,9 +19,12 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 public class SuperTable{
 
+
+    private static final String POWERS = "powers";
+
    public static void main(String[] args) throws IOException {
 
-       static final String POWERS = "powers";
+
 
        Configuration config	= HBaseConfiguration.create();
        HBaseAdmin admin = new HBaseAdmin(config);
